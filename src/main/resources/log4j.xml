@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- 控制台输出器 -->
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%c] %m%n"/>
+        </layout>
+        <!--限制输出级别 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="ERROR"/>
+            <param name="LevelMin" value="DEBUG"/>
+        </filter>
+    </appender>
+
+    <!-- 日文件输出器（程序所有日志输出） -->
+    <appender name="p2p" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="log/p2p.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低级别 -->
+        <param name="Threshold" value="info"></param>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 日文件输出器（服务端日志输出） -->
+    <appender name="server" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="log/server.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低级别 -->
+        <param name="Threshold" value="info"></param>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 日文件输出器（客户端日志输出） -->
+    <appender name="client" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="log/client.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低级别 -->
+        <param name="Threshold" value="info"></param>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 文件输出器 -->
+    <appender name="File" class="org.apache.log4j.FileAppender">
+        <param name="File" value="log/File.log"/>
+        <param name="Append" value="true"/>
+        <param name="Threshold" value="info"></param>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <category name="com.hdwang.p2p.P2pServer" additivity="false">
+         <!--<priority value="info" />-->
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="server" />
+    </category>
+
+    <category name="com.hdwang.p2p.P2pClient"  additivity="false">
+        <!--<priority value="info" />-->
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="client" />
+    </category>
+
+    <!--根日志记录器，日志级别：OFF、FATAL、ERROR、WARN、INFO、DEBUG、TRACE、ALL-->
+    <root>
+        <priority value="debug"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="p2p" />
+    </root>
+</log4j:configuration>
